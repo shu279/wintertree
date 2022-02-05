@@ -21,10 +21,11 @@ public class CameraAim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        setPosition.x = player.transform.position.x + r * Mathf.Cos(Mathf.Deg2Rad * deg);
+        /*setPosition.x = player.transform.position.x + r * Mathf.Cos(Mathf.Deg2Rad * deg);
         setPosition.y = player.transform.position.y + offset.y;
         setPosition.z = player.transform.position.z + r * Mathf.Sin(Mathf.Deg2Rad * deg);
         transform.position = setPosition;
+        transform.LookAt(aimObject.transform);*/
         transform.LookAt(aimObject.transform);
     }
 }

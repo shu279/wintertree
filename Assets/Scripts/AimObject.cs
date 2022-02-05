@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class AimObject : MonoBehaviour
 {
-    public GameObject player;
-    private Vector3 offset;
-    private Vector3 setPosition;
-    private Vector3 moveOffsetY;
+    private Vector2 rotation;
+    [SerializeField] Vector2 rotationSpeed;
+    [SerializeField] Transform playerCenterPosition;
 
     //半径
     private float r = 5;
@@ -18,32 +17,26 @@ public class AimObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        offset = transform.position + player.transform.position;
-        moveOffsetY = new Vector3(0, 0.3f, 0);
+        rotation = Vector2.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            deg += 3f;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            deg -= 3f;
-        }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            offset += moveOffsetY;
+            rotation += new Vector2(rotationSpeed.x, 0);
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            offset -= moveOffsetY;
+            rotation -= new Vector2(rotationSpeed.x, 0);
         }
-        setPosition.x = player.transform.position.x - r * Mathf.Cos(Mathf.Deg2Rad * deg);
-        setPosition.y = player.transform.position.y - offset.y;
-        setPosition.z = player.transform.position.z - r * Mathf.Sin(Mathf.Deg2Rad * deg);
-        transform.position = setPosition;
+
+        //位置確定
+        Vector3 diff = new Vector3(
+            0,
+            r * Mathf.Sin(rotation.x * Mathf.PI / 180f),
+            r * Mathf.Cos(rotation.x * Mathf.PI / 180f));
+        transform.position = playerCenterPosition.position + diff;
     }
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody rb;
+    public static Player instance;
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         rb = GetComponent<Rigidbody>();
     }
 
